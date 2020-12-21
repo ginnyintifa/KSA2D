@@ -4,8 +4,15 @@
 \alias{ks_map}
 \title{Find kinase-substrate relationships}
 \usage{
-ks_map(protData_filename, psiteData_filename, uniprot_gn_filename,
-  fudge_factor, ksNetwork_filename, working_dir, ks_outputName)
+ks_map(
+  protData_filename,
+  psiteData_filename,
+  uniprot_gn_filename,
+  fudge_factor,
+  ksNetwork_filename,
+  working_dir,
+  ks_outputName
+)
 }
 \arguments{
 \item{protData_filename}{file name of protein data frame}

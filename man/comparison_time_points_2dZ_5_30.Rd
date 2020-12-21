@@ -4,9 +4,19 @@
 \alias{comparison_time_points_2dZ_5_30}
 \title{Compare between 2 conditions (paired) in 2D different conditions in different dimemsions}
 \usage{
-comparison_time_points_2dZ_5_30(s1_d1_col_name, s2_d1_col_name,
-  s1_d2_col_name, s2_d2_col_name, d1_data, d2_data, nna_cutoff, all_seeds,
-  permute_times, compare_name, working_dir)
+comparison_time_points_2dZ_5_30(
+  s1_d1_col_name,
+  s2_d1_col_name,
+  s1_d2_col_name,
+  s2_d2_col_name,
+  d1_data,
+  d2_data,
+  nna_cutoff,
+  all_seeds,
+  permute_times,
+  compare_name,
+  working_dir
+)
 }
 \arguments{
 \item{s1_d1_col_name}{names of the columns in the first condition in the first dimension data}

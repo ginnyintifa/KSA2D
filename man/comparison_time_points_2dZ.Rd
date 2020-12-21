@@ -4,8 +4,17 @@
 \alias{comparison_time_points_2dZ}
 \title{Compare between 2 conditions (paired) in 2D}
 \usage{
-comparison_time_points_2dZ(s1_col_name, s2_col_name, d1_data, d2_data,
-  nna_cutoff, all_seeds, permute_times, working_dir, compare_name)
+comparison_time_points_2dZ(
+  s1_col_name,
+  s2_col_name,
+  d1_data,
+  d2_data,
+  nna_cutoff,
+  all_seeds,
+  permute_times,
+  working_dir,
+  compare_name
+)
 }
 \arguments{
 \item{s1_col_name}{names of the columns in the first condition}

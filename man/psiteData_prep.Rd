@@ -4,8 +4,12 @@
 \alias{psiteData_prep}
 \title{convert to log2 scale and normalise psites with mother protein abundance}
 \usage{
-psiteData_prep(psiteData_filename, uniprot_gn_filename, fudge_factor,
-  protData_p)
+psiteData_prep(
+  psiteData_filename,
+  uniprot_gn_filename,
+  fudge_factor,
+  protData_p
+)
 }
 \arguments{
 \item{psiteData_filename}{file name of phosphorylation data frame}

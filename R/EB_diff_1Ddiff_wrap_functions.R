@@ -29,17 +29,17 @@ comparison_time_points_1d = function(s1_col_name,
                                      compare_name)
   
 {
-  # s1_col_name = paste0("p_5min_",co_id)
-  # s2_col_name = paste0("p_0min_", co_id)
-  # d1_data = prot_log_f
-  # nna_cutoff = 6
-  # all_seeds = seeds10
-  # permute_times = 500
-  # working_dir = "/data/ginny/IR_proteomics/EbData/prot1D_20200723/"
-  # compare_name = "co_5min_0" 
+  
   # 
-  
-  
+  # s1_col_name = wnt3a
+  # s2_col_name = ctrl
+  # d1_data = wnt_mrna
+  # nna_cutoff = 2
+  # all_seeds = seeds
+  # permute_times = 1000
+  # working_dir = "/Users/Ginny/Google Drive/DUKE_wnt_20201221/"
+  # compare_name = "wnt3a_ctrl_mrna"
+  # 
   s1_d1 = d1_data[,s1_col_name]
   s2_d1 = d1_data[,s2_col_name]
   
@@ -48,7 +48,7 @@ comparison_time_points_1d = function(s1_col_name,
     s1_d1 = s1_d1,
     s2_d1 = s2_d1,
     names = d1_data[,1],
-    nna_cutoff = 6
+    nna_cutoff = nna_cutoff
   )
   
   ### this function is not very correct 
@@ -91,8 +91,16 @@ comparison_time_points_1d = function(s1_col_name,
   null_permute = 
     shuffle_time_points( sample_size = ncol(s1_d1_use),
                          numPermu = permute_times,
+                        # numPermu = 100,
                          seeds = all_seeds)
   
+  ### reduce the null_permute to the unique number 
+  
+  if(length(null_permute)>2^length(s1_col_name))
+  {
+    null_permute = unique(null_permute)
+    permute_times = 2^length(s1_col_name)
+  }
   
   
   s1_s2_z_null_use = lapply(1:permute_times, function(x)
@@ -114,7 +122,7 @@ comparison_time_points_1d = function(s1_col_name,
     permute_use = s1_s2_filter_1d(s1_d1 = this_c1_d1,
                                   s2_d1 = this_c2_d1,
                                   names = s1_s2_use[[3]],
-                                  nna_cutoff = 6)
+                                  nna_cutoff = nna_cutoff)
     
     
     this_z= generate_oneSample_tstat_1d(s1_df1 = permute_use[[1]],
@@ -136,16 +144,22 @@ comparison_time_points_1d = function(s1_col_name,
   hist(s1_s2_z_null_use_cat, breaks  = 100)
   dev.off()
   
+
   
+    
   
   Z_dens = density(s1_s2_Z_use, n = 2000)
   z_null_dens = density(s1_s2_z_null_use_cat, n = 2000)
   
   
-  Zz_dens_pdf_name = paste0(working_dir,compare_name, "_Zz_dens_more.pdf")
+  
+  
+  Zz_dens_pdf_name = paste0(working_dir,compare_name, "_Zz_dens.pdf")
   ylimit = max(z_null_dens$y)
+  xmin = min(c(z_null_dens$x, Z_dens$x))
+  xmax = max(c(z_null_dens$x, Z_dens$x))
   pdf(Zz_dens_pdf_name,useDingbats = F)
-  plot(z_null_dens, col = "green", ylim = c(0,ylimit), xlim = c(-10,10))
+  plot(z_null_dens, col = "green", ylim = c(0,ylimit), xlim = c(xmin,xmax))
   lines(Z_dens)
   dev.off()
   
@@ -169,6 +183,32 @@ comparison_time_points_1d = function(s1_col_name,
   s1_s2_p0_use = Z_zero_dens/z_null_zero_dens
   ### calculate f/f0 for each Z 
   
+  # 
+  # 
+  # #######
+  # ######
+  # nn = c(201:2000)
+  # pp  = rep(0, 1800)
+  # for (i in 1:1800)
+  # {
+  #   n =512
+  #   Z_dens = density(s1_s2_Z_use, n = n)
+  #   z_null_dens = density(s1_s2_z_null_use_cat, n = n)
+  #   
+  #   Z_zero_which = which(abs(Z_dens$x-0) == min(abs(Z_dens$x-0)))[1]
+  #   Z_zero_dens = Z_dens$y[Z_zero_which]
+  #   
+  #   z_null_zero_which = which(abs(z_null_dens$x-0) == min(abs(z_null_dens$x-0)))[1]
+  #   z_null_zero_dens = z_null_dens$y[z_null_zero_which]
+  #   
+  #   
+  #   s1_s2_p0_use = Z_zero_dens/z_null_zero_dens
+  #   pp[i]  = s1_s2_p0_use
+  #   
+  # }
+ 
+  #######
+  #######
   
   f02f = rep(0, length(s1_s2_Z_use))
   
@@ -210,15 +250,15 @@ comparison_time_points_1d = function(s1_col_name,
   p1_corrected = Z_p1
   p1_corrected[which(Z_p1<0)]=0
   lfdr = 1-p1_corrected
-  ### a scatter plot 
+  ## a scatter plot
   sanity_pdf_name = paste0(working_dir,compare_name, "_ttest_check.pdf")
-  
-  ### when plot remove the outlier ones 
-  
+
+  ### when plot remove the outlier ones
+
   #leftones = which(s1_s2_Z_use< 0)
-  
+
   pdf(sanity_pdf_name,useDingbats = F)
-  
+
   plot(x = t_Z,
        y = lfdr,
        xlim = c(0,1),
@@ -229,7 +269,7 @@ comparison_time_points_1d = function(s1_col_name,
        ylab = "local fdr",
        pch = 16)
   abline(a= 0, b = 1,lty = 2)
-  
+
   plot(x = s1_s2_Z_use,
        y = t_Z,
        xlim = c(-15,15),
@@ -246,11 +286,11 @@ comparison_time_points_1d = function(s1_col_name,
         col = "red",
         pch = 16)
   abline(v =0,lty = 2)
-  
- 
+
+
   dev.off()
-  
-  
+
+  # 
   result_df = data.frame(name =s1_s2_use[[3]],
                          fc = s1_s2_lfc,
                          Z = s1_s2_Z_use,
