@@ -30,16 +30,6 @@ comparison_time_points_1d = function(s1_col_name,
   
 {
   
-  # 
-  # s1_col_name = wnt3a
-  # s2_col_name = ctrl
-  # d1_data = wnt_mrna
-  # nna_cutoff = 2
-  # all_seeds = seeds
-  # permute_times = 1000
-  # working_dir = "/Users/Ginny/Google Drive/DUKE_wnt_20201221/"
-  # compare_name = "wnt3a_ctrl_mrna"
-  # 
   s1_d1 = d1_data[,s1_col_name]
   s2_d1 = d1_data[,s2_col_name]
   
@@ -51,8 +41,7 @@ comparison_time_points_1d = function(s1_col_name,
     nna_cutoff = nna_cutoff
   )
   
-  ### this function is not very correct 
-  
+
   cat("data filtered.", "\n")
   #### generate Z
   s1_d1_use = s1_s2_use[[1]]
@@ -61,8 +50,7 @@ comparison_time_points_1d = function(s1_col_name,
   s1_s2_Z_use = generate_oneSample_tstat_1d(s1_df1 = s1_d1_use,
                                             s2_df1 = s2_d1_use) 
   
-  ### produce the original log2 fold change 
-  
+
   s1_s2_lfc = compute_log2foldchage(s1_df1 = s1_d1_use,
                                     s2_df1 = s2_d1_use)
   
@@ -183,33 +171,7 @@ comparison_time_points_1d = function(s1_col_name,
   s1_s2_p0_use = Z_zero_dens/z_null_zero_dens
   ### calculate f/f0 for each Z 
   
-  # 
-  # 
-  # #######
-  # ######
-  # nn = c(201:2000)
-  # pp  = rep(0, 1800)
-  # for (i in 1:1800)
-  # {
-  #   n =512
-  #   Z_dens = density(s1_s2_Z_use, n = n)
-  #   z_null_dens = density(s1_s2_z_null_use_cat, n = n)
-  #   
-  #   Z_zero_which = which(abs(Z_dens$x-0) == min(abs(Z_dens$x-0)))[1]
-  #   Z_zero_dens = Z_dens$y[Z_zero_which]
-  #   
-  #   z_null_zero_which = which(abs(z_null_dens$x-0) == min(abs(z_null_dens$x-0)))[1]
-  #   z_null_zero_dens = z_null_dens$y[z_null_zero_which]
-  #   
-  #   
-  #   s1_s2_p0_use = Z_zero_dens/z_null_zero_dens
-  #   pp[i]  = s1_s2_p0_use
-  #   
-  # }
  
-  #######
-  #######
-  
   f02f = rep(0, length(s1_s2_Z_use))
   
   for(i in 1:length(s1_s2_Z_use))
@@ -322,15 +284,8 @@ comparison_time_points_1d = function(s1_col_name,
     f1_dens[i] = (this_dens-s1_s2_p0_use*this_null_dens)/(1-s1_s2_p0_use)  ### here is problematic in the 2d scenario, check this 
     
   }
-  ### something is wrong here?
-  ### p0 is too small 
-  
-  
-  # if(min(f1_dens) <0)
-  #   f1_dens = f1_dens-min(f1_dens)
-  # 
-  #### I need to correct this part 
-  f1_dens[which(f1_dens<0)] = 0 
+ 
+    f1_dens[which(f1_dens<0)] = 0 
   
   
   overlay_dens_pdf_name =  paste0(working_dir, compare_name,"_dens_overlay.pdf")
@@ -380,17 +335,7 @@ comparison_time_points_1d_90 = function(s1_col_name,
                                      working_dir)
   
 {
-  # s1_col_name = paste0("p_5min_",co_id)
-  # s2_col_name = paste0("p_0min_", co_id)
-  # d1_data = prot_log_f
-  # nna_cutoff = 6
-  # all_seeds = seeds10
-  # permute_times = 500
-  # working_dir = "/data/ginny/IR_proteomics/EbData/prot1D_20200723/"
-  # compare_name = "co_5min_0" 
-  # 
-  
-  
+ 
   s1_d1 = d1_data[,s1_col_name]
   s2_d1 = d1_data[,s2_col_name]
   
@@ -564,10 +509,7 @@ comparison_time_points_1d_90 = function(s1_col_name,
   ### a scatter plot 
   sanity_pdf_name = paste0(working_dir,compare_name, "_ttest_check.pdf")
   
-  ### when plot remove the outlier ones 
-  
-  #leftones = which(s1_s2_Z_use< 0)
-  
+ 
   pdf(sanity_pdf_name,useDingbats = F)
   
   plot(x = t_Z,
@@ -633,15 +575,7 @@ comparison_time_points_1d_90 = function(s1_col_name,
     f1_dens[i] = (this_dens-s1_s2_p0_use*this_null_dens)/(1-s1_s2_p0_use)  ### here is problematic in the 2d scenario, check this 
     
   }
-  ### something is wrong here?
-  ### p0 is too small 
-  
-  
-  # if(min(f1_dens) <0)
-  #   f1_dens = f1_dens-min(f1_dens)
-  # 
-  #### I need to correct this part 
-  f1_dens[which(f1_dens<0)] = 0 
+   f1_dens[which(f1_dens<0)] = 0 
   
   
   overlay_dens_pdf_name =  paste0(working_dir, compare_name,"_dens_overlay.pdf")
@@ -698,19 +632,7 @@ comparison_groups_afterTimeLog = function(s1_g1_col_name,
 {
   
   
-  # 
-  # s1_g1_col_name = paste0("p_5min_",sl_id)
-  # s2_g1_col_name = paste0("p_0min_", sl_id)
-  # s1_g2_col_name = paste0("p_5min_",cl_id)
-  # s2_g2_col_name = paste0("p_0min_", cl_id)
-  # d1_data = prot_log_f
-  # nna_cutoff = 6
-  # all_seeds = seeds10
-  # permute_times = 500
-  # working_dir = "/data/ginny/IR_proteomics/EbData/prot1D_groupwise_20200803/"
-  # compare_name = "sl_cl_5min_0min" 
-  # 
-  
+
   
   s1_g1_d1 = d1_data[,s1_g1_col_name]
   s2_g1_d1 = d1_data[,s2_g1_col_name]
@@ -1043,15 +965,7 @@ comparison_groups_afterTimeLog = function(s1_g1_col_name,
     f1_dens[i] = (this_dens-s1_s2_p0_use*this_null_dens)/(1-s1_s2_p0_use)  ### here is problematic in the 2d scenario, check this 
     
   }
-  ### something is wrong here?
-  ### p0 is too small 
-  
-  
-  # if(min(f1_dens) <0)
-  #   f1_dens = f1_dens-min(f1_dens)
-  # 
-  #### I need to correct this part 
-  f1_dens[which(f1_dens<0)] = 0 
+   f1_dens[which(f1_dens<0)] = 0 
   
   
   overlay_dens_pdf_name =  paste0(working_dir, compare_name,"_dens_overlay.pdf")

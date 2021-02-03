@@ -31,17 +31,7 @@ comparison_time_points_2dZ = function(s1_col_name,
                                       working_dir,
                                       compare_name)
 {
-  # s1_col_name = paste0("p_5min_",allg_id)
-  # s2_col_name = paste0("p_0min_", allg_id)
-  # d1_data = kprot_data
-  # d2_data = supsite_data
-  # nna_cutoff = 6
-  # all_seeds = seeds30
-  # permute_times = 500
-  # compare_name = "allg_5min_0_0701"
-  # working_dir = "/data/ginny/IR_proteomics/EbData/pair2DZ_20200627/"
-  # 
-  # 
+  
   d1_data = data.frame(d1_data)
   d2_data = data.frame(d2_data)
   
@@ -85,23 +75,7 @@ comparison_time_points_2dZ = function(s1_col_name,
   
   s1_s2_lfc_d2 = compute_log2foldchage(s1_df1 = s1_d2_use,
                                        s2_df1 = s2_d2_use)
-# 
-#   h_Z <- hexbin(s1_s2_Z_use_d1,
-#                 s1_s2_Z_use_d2,
-#                 xbins = 50)
-#   Z_pdf_name = paste0(working_dir,compare_name, "_2d_Z_hist.pdf")
-#   rf <- colorRampPalette(rev(brewer.pal(11,'Spectral')))
-#   
-#   pdf(Z_pdf_name, useDingbats = F)
-#   
-#   plot(h_Z,colramp=rf,
-#        xlab = "kinase_Z",
-#        ylab = "substrate_Z"
-#   )
-#   
-#   
-#   dev.off()
-  
+
   
   null_permute =  shuffle_time_points( sample_size = ncol(s1_d1_use),
                          numPermu = permute_times,
@@ -156,24 +130,7 @@ comparison_time_points_2dZ = function(s1_col_name,
   
   s1_s2_z_null_use_cat =  Reduce(rbind, s1_s2_z_null_use)
   
-  # h_z_null <- hexbin(s1_s2_z_null_use_cat[,1],
-  #                    s1_s2_z_null_use_cat[,2],
-  #                    xbins = 50)
-  # 
-  # 
-  # z_null_pdf_name = paste0(working_dir,compare_name, "_2d_z_null_hist.pdf")
-  # rf <- colorRampPalette(rev(brewer.pal(11,'Spectral')))
-  # 
-  # pdf(z_null_pdf_name, useDingbats = F)
-  # 
-  # plot(h_z_null,colramp=rf,
-  #      xlab = "kinase_Z",
-  #      ylab = "substrate_Z"
-  # )
-  # 
-  # dev.off()
-  # 
-
+ 
   
   Z_dens = kde2d(s1_s2_Z_use_d1,
                  s1_s2_Z_use_d2,
@@ -313,19 +270,6 @@ comparison_time_points_2dZ = function(s1_col_name,
                 ylab = "subtrate",
                 zlab = "posterior")
   
-# 
-#   scatterplot3d(x = s1_s2_Z_use_d1,
-#                 y = s1_s2_Z_use_d2,
-#                 z = p1_corrected,
-#                 grid = T,
-#                 box = F,
-#                 color = get_col,
-#                 angle = 220,
-#                 pch = 16,
-#                 xlab = "kinase",
-#                 ylab = "subtrate",
-#                 zlab = "posterior")
-#   
   dev.off()
   
   
@@ -376,13 +320,8 @@ comparison_time_points_2dZ = function(s1_col_name,
     
     
   }
-  ### something is wrong here?
-  ### p0 is too small 
-  
-  
-  #if(min(f1_dens) <0)
-   # f1_dens = f1_dens-min(f1_dens)
-  f1_dens[which(f1_dens<0)] = 0 
+ 
+    f1_dens[which(f1_dens<0)] = 0 
   
   
   f1_x_marginal = rowSums(f1_dens)/sum( rowSums(f1_dens))
@@ -453,19 +392,6 @@ comparison_time_points_2dZ_5_30 = function(s1_d1_col_name,
                                            compare_name,
                                            working_dir)
 {
-  # s1_d1_col_name = paste0("p_5min_",allg_id)
-  # s2_d1_col_name = paste0("p_0min_",allg_id)
-  # s1_d2_col_name = paste0("p_30min_",allg_id)
-  # s2_d2_col_name = paste0("p_0min_",allg_id)
-  
-  # d1_data = kprot_data
-  # d2_data = supsite_data
-  # nna_cutoff = 6
-  # all_seeds = seeds30
-  # permute_times = 500
-  # compare_name = "allg_5prot_30psite_0704"
-  # working_dir = "/data/ginny/IR_proteomics/EbData/pair2DZ_20200627/"
-  # 
   
   
   d1_data = data.frame(d1_data)
@@ -512,39 +438,7 @@ comparison_time_points_2dZ_5_30 = function(s1_d1_col_name,
   s1_s2_lfc_d2 = compute_log2foldchage(s1_df1 = s1_d2_use,
                                        s2_df1 = s2_d2_use)
   
-  ### now let me present these values on a 2d histogram 
-  
-  #   
-  # 
-  # df_Z = data.frame(x = s1_s2_Z_use_d1,
-  #                      y = s1_s2_Z_use_d2)
-  # 
-  # h_Z <- hexbin(s1_s2_Z_use_d1,
-  #               s1_s2_Z_use_d2,
-  #               xbins = 50)
-  # Z_pdf_name = paste0(working_dir,compare_name, "_2d_Z_hist.pdf")
-  # rf <- colorRampPalette(rev(brewer.pal(11,'Spectral')))
-  # 
-  # pdf(Z_pdf_name, useDingbats = F)
-  # 
-  # plot(h_Z,colramp=rf,
-  #      xlab = "kinase_Z",
-  #      ylab = "substrate_Z"
-  # )
-  # # hexVP.abline(hexViewport(h_Z),
-  # #              h=0,
-  # #              v= 0,
-  # #              lty = 2,
-  # #              lwd = 0.5)
-  # # #abline(v = 0 , h = 0, lty = 2, lwd = 0.5)
-  # 
-  # dev.off()
-  # 
-  ### ok if I can create the density plot for the null, it may also work 
-  ## ok get the nulls by calculating the 2 ds together 
-  
-  
-  
+ 
   null_permute = 
     shuffle_time_points( sample_size = ncol(s1_d1_use),
                          numPermu = permute_times,
@@ -604,33 +498,6 @@ comparison_time_points_2dZ_5_30 = function(s1_d1_col_name,
   
   
   s1_s2_z_null_use_cat =  Reduce(rbind, s1_s2_z_null_use)
-  
-  
-  # 
-  # h_z_null <- hexbin(s1_s2_z_null_use_cat[,1],
-  #                    s1_s2_z_null_use_cat[,2],
-  #                    xbins = 50)
-  # 
-  # 
-  # z_null_pdf_name = paste0(working_dir,compare_name, "_2d_z_null_hist.pdf")
-  # rf <- colorRampPalette(rev(brewer.pal(11,'Spectral')))
-  # 
-  # pdf(z_null_pdf_name, useDingbats = F)
-  # 
-  # plot(h_z_null,colramp=rf,
-  #      xlab = "kinase_Z",
-  #      ylab = "substrate_Z"
-  # )
-  # # hexVP.abline(hexViewport(h_Z),
-  # #              h=0,
-  # #              v= 0,
-  # #              lty = 2,
-  # #              lwd = 0.5)
-  # # #abline(v = 0 , h = 0, lty = 2, lwd = 0.5)
-  # 
-  # dev.off()
-  # 
-  # 
   
   
   Z_dens = kde2d(s1_s2_Z_use_d1,
@@ -772,19 +639,7 @@ comparison_time_points_2dZ_5_30 = function(s1_d1_col_name,
                 ylab = "subtrate",
                 zlab = "posterior")
   
-  # 
-  #   scatterplot3d(x = s1_s2_Z_use_d1,
-  #                 y = s1_s2_Z_use_d2,
-  #                 z = p1_corrected,
-  #                 grid = T,
-  #                 box = F,
-  #                 color = get_col,
-  #                 angle = 220,
-  #                 pch = 16,
-  #                 xlab = "kinase",
-  #                 ylab = "subtrate",
-  #                 zlab = "posterior")
-  #   
+   #   
   dev.off()
   
   
@@ -835,10 +690,7 @@ comparison_time_points_2dZ_5_30 = function(s1_d1_col_name,
     
     
   }
-  ### something is wrong here?
-  ### p0 is too small 
-  
-  
+
     f1_dens[which(f1_dens==0)] = 0
   
   

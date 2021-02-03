@@ -7,8 +7,7 @@ get_phospho_parsed = function(pho)
 {
   
   
-  #pho = pho4
-  
+
   parse_site = rbindlist(lapply(1:nrow(pho), function(x){
     #parse_site = rbindlist(lapply(12000:13000, function(x){
     

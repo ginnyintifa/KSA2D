@@ -10,10 +10,7 @@ noNA = function(x)
 
 shuffle_time_points = function(sample_size, numPermu, seeds)
 {
-  # sample_size = ncol(s1_d1_use)
-  # numPermu = permute_times
-  # seeds = all_seeds
-  # 
+
   these_shuffle = lapply(1:numPermu, function(x) {
     
     this_row = rep(0,sample_size)
@@ -43,11 +40,7 @@ s1_s2_filter = function(s1_d1,
                         nna_cutoff = 6)
 {
   
-  # s1_d1 = s1_d1
-  # s1_d2 = s1_d2
-  # s2_d1 = s2_d1
-  # s2_d2 = s2_d2
-  # 
+   # 
   nas1_d1 = s1_d1
   nas1_d2 = s1_d2
   nas2_d1 = s2_d1
@@ -67,12 +60,7 @@ s1_s2_filter = function(s1_d1,
     
     s12_na = union(s1_na, s2_na)
     
-    # if(!identical(s1_na,s2_na))
-    # {
-    #   cat(i, " ############### ",s1_na , "      ", s2_na, "     ", s12_na,    "\n")
-    #   
-    # }
-    # 
+      # 
     if(length(s12_na)>0)
     {
       
@@ -119,11 +107,6 @@ s1_s2_filter_1d = function(s1_d1,
                            names,
                            nna_cutoff)
 {
-  # s1_d1 = s1_d1
-  # s2_d1 = s2_d1
-  # names = d1_data[,1]
-  # nna_cutoff = 6
-  # 
   # 
   
   nas1_d1 = s1_d1
@@ -276,20 +259,6 @@ density_persp = function(pdf_name,
                          my_shade)
   
 {
-  # 
-  # pdf_name = paste0(working_dir,compare_name, "_2d_Z_dens_function.pdf")
-  # x = Z_dens$x
-  # y = Z_dens$y
-  # z = Z_dens$z
-  # x_margin_data = s1_s2_Z_use_d1
-  # y_margin_data = s1_s2_Z_use_d2
-  # my_xlab = "kinase"
-  # my_ylab = "substrate"
-  # my_zlab = "density"
-  # my_main = "Z"
-  # my_theta = 120
-  # my_shade = 0.5
-  # # 
   
 
   pdf(pdf_name, useDingbats = F)

@@ -27,22 +27,6 @@ ks_map = function(protData_filename,
 
 
 {
-  # 
-  # sel_prot= fread("/data/ginny/IR_proteomics/cleanData/noNorm_unique_all_annotate_prot.tsv",
-  #                 stringsAsFactors = F)
-  # 
-  # p_psite = fread("/data/ginny/IR_proteomics/cleanData/noNorm_unique_all_annotate_phospho.tsv",
-  #                 stringsAsFactors = F)
-  # 
-  
-  # 
-  # ks_network = fread("/data/ginny/KinaseSubstrate/mergeNetwork.tsv",
-  #                    stringsAsFactors = F)
-  
-  
-  ### use the newest version of the mapping book 
-  # uniprot_gn= fread("/data/ginny/tcga_pancan/important_files/sp_20200513_uniprot_gn.tsv",
-  #                   stringsAsFactors = F)
   
 sel_prot= fread(protData_filename,
                 stringsAsFactors = F,
@@ -184,11 +168,6 @@ data_ks = rbindlist(lapply(1:nrow(ks_network), function(x) {
   
 }))
 
-# 
-# 
-# write.table(data_ks, 
-#             "/data/ginny/IR_proteomics/mapData/ksNetwork_dataCol_KHU_alltimes_0627.tsv",
-#             quote = F, row.names = F, sep = "\t")
 
 write.table(data_ks, 
             paste0(working_dir, ks_outputName),
