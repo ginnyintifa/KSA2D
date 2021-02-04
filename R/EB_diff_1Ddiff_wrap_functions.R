@@ -214,7 +214,7 @@ comparison_time_points_1d = function(s1_col_name,
   
   plot(x = s1_s2_Z_use,
        y = p1_corrected,
-       ylim = c(-1,1),
+       ylim = c(0,1),
        type = "p",
        col = pc,
        pch = 16)
