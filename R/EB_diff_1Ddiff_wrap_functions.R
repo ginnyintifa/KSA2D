@@ -194,6 +194,16 @@ comparison_time_points_1d = function(s1_col_name,
   Z_p0 = s1_s2_p0_use*f02f
   Z_p1 = 1-Z_p0
   
+  p1_corrected = Z_p1
+  p1_corrected[which(Z_p1<0)]=0
+  lfdr = 1-p1_corrected
+  
+  
+  pc = rep(rgb(0.1,0,0,0.5), length(s1_s2_Z_use))
+  pc[which( p1_corrected>0.9)] = rgb(0.5,0,0,0.5)
+  
+  pc[which(s1_s2_Z_use>0 & p1_corrected>0.95)] = rgb(1,0,0,0.5)
+  pc[which(s1_s2_Z_use<0 & p1_corrected>0.95)] = rgb(1,0.5,0,0.5)
   
   ### new overlay 
   posterior_pdf_name = paste0(working_dir,compare_name, "_Z_posterior.pdf")
@@ -203,15 +213,14 @@ comparison_time_points_1d = function(s1_col_name,
   pdf(posterior_pdf_name,useDingbats = F)
   
   plot(x = s1_s2_Z_use,
-       y = Z_p1,
+       y = p1_corrected,
        ylim = c(-1,1),
        type = "p",
+       col = pc,
        pch = 16)
   dev.off()
   
-  p1_corrected = Z_p1
-  p1_corrected[which(Z_p1<0)]=0
-  lfdr = 1-p1_corrected
+
   ## a scatter plot
   sanity_pdf_name = paste0(working_dir,compare_name, "_ttest_check.pdf")
 
