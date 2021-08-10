@@ -117,7 +117,8 @@ A1L190_SYCE3	NA	NA	NA	NA	NA	NA	NA	NA	NA
 psiteData_p = psiteData_prep(psiteData_filename = "path/to/psiteData.tsv",
 uniprot_gn_filename = "path/to/uniprot_gn.tsv",
 fudge_facotr = 0.01,
-                          protData_p = protData_prep)
+sub_norm = T,
+                          protData_p = protData_p)
 ```
 Return value of this function is a data frame ```psiteData_p```
 
@@ -224,10 +225,11 @@ Before we move on to 2D analysis, it is necessary to map protein and phosphoryla
 ```{r}
 
 
-ks_map(protData_filename = "path/to/protData.tsv",
+ks_list = ks_map(protData_filename = "path/to/protData.tsv",
                   psiteData_filename = "path/to/psiteData.tsv",
                   uniprot_gn_filename = "path/to/uniprot_gn.tsv",
                   fudge_factor = 0.01,
+                  sub_norm = T,
                   ksNetwork_filename = "path/to/ksNetwork.tsv",
                     working_dir = "your/working/dir/",
                   ks_outputName = "KS_network.tsv")
