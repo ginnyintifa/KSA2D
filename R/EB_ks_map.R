@@ -189,7 +189,7 @@ supsite_data = ks_pair[supsite_row,]
 
 
 
-if(sub_norm = F)
+if(sub_norm == F)
 {
   site_row = (pair_seq-1)*4 + 2
   supsite_data = ks_pair[site_row,]

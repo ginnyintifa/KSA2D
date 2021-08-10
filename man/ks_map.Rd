@@ -10,6 +10,7 @@ ks_map(
   uniprot_gn_filename,
   fudge_factor,
   ksNetwork_filename,
+  sub_norm = T,
   working_dir,
   ks_outputName
 )

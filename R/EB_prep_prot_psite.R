@@ -76,7 +76,7 @@ psiteData_prep = function(psiteData_filename,
   
   norm_psite_log_f = psite_log_f
   
-  if(sub_norm = T)
+  if(sub_norm == T)
   {
     
   

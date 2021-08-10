@@ -7,6 +7,7 @@
 psiteData_prep(
   psiteData_filename,
   uniprot_gn_filename,
+  sub_norm = T,
   fudge_factor,
   protData_p
 )
