@@ -73,7 +73,6 @@ psiteData_prep = function(psiteData_filename,
   
   psite_log_f = data.frame(psite_names,log2(parse_psite[,-c(1:5)]+fpsite),  stringsAsFactors = F)
   
-  
   norm_psite_log_f = psite_log_f
   
   if(sub_norm == T)

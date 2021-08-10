@@ -29,6 +29,16 @@ ks_map = function(protData_filename,
 
 {
   
+  
+  # protData_filename = "/Users/ginny/Desktop/ccRCC_data/KSA2Dprot/prot_uni_df.tsv"
+  #  psiteData_filename = "/Users/ginny/Desktop/ccRCC_data/KSA2Dprot/phospho_uni_df.tsv"
+  #  uniprot_gn_filename = "/Users/ginny/Google Drive/KSA2D_github/KSA2Dpackage_webSiteFiles/sp_20200513_uniprot_gn.tsv"
+  #  sub_norm = F
+  #  fudge_factor = 0.01
+  #  ksNetwork_filename = "/Users/ginny/Google Drive/KSA2D_github/KSA2Dpackage_webSiteFiles/mergeNetwork.tsv"
+  #  working_dir = "/Users/ginny/Desktop/ccRCC_data/KSA2Dprot/"
+  #  ks_outputName = "KS_network.tsv"
+  # 
 sel_prot= fread(protData_filename,
                 stringsAsFactors = F,
                 data.table = F)
@@ -69,8 +79,7 @@ parse_psite_log_f = data.frame(parse_psite[,c(1:5)],log2(parse_psite[,-c(1:5)]+f
 
 data_ks = rbindlist(lapply(1:nrow(ks_network), function(x) {
   
-  
-  if(x%%100 ==0)
+  if(x%%1000 ==0)
     cat(x, "\n")
   kin = ks_network$kinase[x]
   sub = ks_network$substrate[x]
@@ -82,7 +91,6 @@ data_ks = rbindlist(lapply(1:nrow(ks_network), function(x) {
   kin_prot_data = kin_prot[,-c(1:3)]
   
   kin_prot_patients = colnames(kin_prot_data)[which(!is.na(kin_prot_data))]
-  
   
   
   if(nrow(kin_prot)>0)
@@ -107,9 +115,13 @@ data_ks = rbindlist(lapply(1:nrow(ks_network), function(x) {
       
       
       substrate_prot = sel_prot_log_f%>%
-        dplyr::filter(geneName == sub)
+        dplyr::filter(geneName == sub)%>%
+        dplyr::group_by(geneName)%>%
+        dplyr::summarise_if(is.numeric, mean, na.rm = T)
+ 
+      #### need to make sure the protein names are unique to the geneName level 
       
-      substrate_prot_data = substrate_prot[,-c(1:3)]
+      substrate_prot_data = substrate_prot[,-1]
       
       substrate_prot_df = data.frame(barcode = colnames(substrate_prot_data),  
                                      substrate_prot = as.numeric(substrate_prot_data),
