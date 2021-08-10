@@ -22,6 +22,7 @@ ks_map = function(protData_filename,
                   uniprot_gn_filename,
                   fudge_factor,
                   ksNetwork_filename,
+                  sub_norm = T,
                   working_dir,
                   ks_outputName)
 
@@ -185,6 +186,16 @@ supsite_row = (pair_seq-1)*4+4
 pair_names = gsub("_prot","", ks_pair$name[kprot_row])
 kprot_data = ks_pair[kprot_row,]
 supsite_data = ks_pair[supsite_row,]
+
+
+
+if(sub_norm = F)
+{
+  site_row = (pair_seq-1)*4 + 2
+  supsite_data = ks_pair[site_row,]
+  
+}
+
 
 pair_data_list = list(kprot_data, supsite_data)
 

@@ -47,6 +47,7 @@ protData_prep = function(protData_filename,
 
 psiteData_prep = function(psiteData_filename,
                           uniprot_gn_filename,
+                          sub_norm = T,
                           fudge_factor,
                           protData_p)
 {
@@ -72,6 +73,12 @@ psiteData_prep = function(psiteData_filename,
   
   psite_log_f = data.frame(psite_names,log2(parse_psite[,-c(1:5)]+fpsite),  stringsAsFactors = F)
   
+  
+  norm_psite_log_f = psite_log_f
+  
+  if(sub_norm = T)
+  {
+    
   
   norm_psite_log_f = rbindlist(lapply(1:nrow(psite_log_f), function(i) {
     
@@ -99,6 +106,8 @@ psiteData_prep = function(psiteData_filename,
   }))
   
   norm_psite_log_f = data.frame(norm_psite_log_f, stringsAsFactors = F)
+  }
+  
   
   
   return(norm_psite_log_f)
